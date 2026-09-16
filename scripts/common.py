@@ -284,7 +284,10 @@ class Client:
             base_url=BASE, headers=headers,
             timeout=httpx.Timeout(connect=10.0, read=timeout, write=10.0, pool=10.0),
         )
-        self._sem = asyncio.Semaphore(concurrency)
+        # One semaphore PER MODEL. A single shared FIFO semaphore let the first model's
+        # queued tasks starve the second model's, which serialised the run at one model's rpm.
+        self._concurrency = concurrency
+        self._sems: dict[str, asyncio.Semaphore] = {}
         self._limiter = RateLimiter(rpm)
         self.max_attempts = max_attempts
         self.tally = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0,
@@ -302,7 +305,8 @@ class Client:
         reasoning = reasoning_for(model)
         if reasoning:
             body["reasoning"] = reasoning
-        async with self._sem:
+        sem = self._sems.setdefault(model, asyncio.Semaphore(self._concurrency))
+        async with sem:
             return await self._post_with_retry(body)
 
     async def _post_with_retry(self, body: dict) -> dict:

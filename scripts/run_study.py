@@ -163,7 +163,7 @@ def main() -> None:
     ap.add_argument("--personas", nargs="+", default=None, help="default: every persona in data/personas.json")
     ap.add_argument("--conditions", nargs="+", default=list(CONDITIONS), choices=list(CONDITIONS))
     ap.add_argument("--limit", type=int, default=None, help="first N items only (pilot)")
-    ap.add_argument("--concurrency", type=int, default=4, help="max in-flight calls across all models")
+    ap.add_argument("--concurrency", type=int, default=6, help="max in-flight calls PER MODEL")
     ap.add_argument("--rpm", type=float, default=18.0, help="max request starts per minute PER MODEL "
                     "(OpenRouter new accounts allow 20)")
     ap.add_argument("--timeout", type=float, default=120.0)

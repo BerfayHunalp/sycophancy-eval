@@ -5,7 +5,7 @@
 # Log: results/run-01.log. Progress bars are throttled to one line per 30 s.
 param(
     [double]$Rpm = 18,
-    [int]$Concurrency = 4
+    [int]$Concurrency = 6   # per model
 )
 $ErrorActionPreference = "Continue"
 Set-Location (Join-Path $PSScriptRoot "..")

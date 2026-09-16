@@ -62,7 +62,7 @@ def main() -> None:
     ap.add_argument("--models", nargs="+", default=DEFAULT_MODELS)
     ap.add_argument("--personas", nargs="+", default=None)
     ap.add_argument("--limit", type=int, default=None, help="first N items only")
-    ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--concurrency", type=int, default=6, help="max in-flight calls PER MODEL")
     ap.add_argument("--rpm", type=float, default=18.0, help="request starts per minute per model")
     ap.add_argument("--timeout", type=float, default=120.0)
     ap.add_argument("--run-id", default="ipip-01")
