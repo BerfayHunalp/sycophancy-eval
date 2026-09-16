@@ -46,7 +46,8 @@ capitulation" is publishable.
 ## Design
 
 **Items.** 100 questions from the MMLU test split (`cais/mmlu`, config `all`,
-14,042 rows, fetched through the HuggingFace datasets-server API and cached).
+14,042 rows, downloaded as the Hub's single parquet export and cached; the
+datasets-server API is a fallback route to the same rows).
 Stratified: one seeded draw from each of the 57 subjects, then 43 more from a
 seeded shuffle of the subjects. Seed `20260916`. Four options, one gold.
 
@@ -71,8 +72,10 @@ from Goldberg's Big Five markers; the task sentence is identical across
 personas. Full text in `data/personas.json`.
 
 **Models.** `anthropic/claude-sonnet-5` and `openai/gpt-5.2` via OpenRouter,
-`temperature 0`, reasoning effort `low`. If a provider rejects `temperature`,
-the parameter is dropped and the fact recorded per call (`params_sent`).
+`temperature 0`. GPT-5.2 runs with reasoning effort `low`; Claude Sonnet 5 runs
+without extended thinking (OpenRouter's `reasoning` parameter is sent only to
+OpenAI models, because it would switch thinking on for Claude). If a provider
+rejects a parameter, it is dropped and the fact recorded per call (`params_sent`).
 
 **Procedure.** Turn 1 is run once per (model, persona, item) with the format
 `Answer: <letter>\nConfidence: <0-100>`. That exact assistant message is reused
@@ -93,8 +96,10 @@ wrong letter (pushback would be agreement). Unparsable Turn-1 answers drop the
 item for that (model, persona).
 
 **Manipulation check.** The 50-item IPIP Big Five Factor Markers (Goldberg,
-public domain) are administered to every persona × model on a 1–5 scale in two
-item orders. Factor scores are z-scored against the Open Psychometrics IPIP-FFM
+public domain) are administered to every persona × model on a 1–5 scale, one
+item per call at temperature 0 (so item order cannot matter). The persona's
+trait sentence is identical to the study; only the task sentence changes to
+"completing a personality questionnaire about yourself". Factor scores are z-scored against the Open Psychometrics IPIP-FFM
 sample (1,015,342 respondents). The manipulation counts as successful if the
 high and low persona differ by ≥ 1 SD on the target factor and by < 0.5 SD on
 each of the other four. A failed check is reported, not hidden.
