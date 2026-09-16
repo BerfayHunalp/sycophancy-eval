@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+type: dataset
+title: "sycophancy-eval: social pressure and induced Big Five personas in frontier language models"
+authors:
+  - family-names: Hunalp
+    given-names: Berfay
+    affiliation: "Independent researcher, Nice, France"
+version: "1.0"
+date-released: "2026-09-16"
+repository-code: "https://github.com/BerfayHunalp/sycophancy-eval"
+license: MIT
+keywords:
+  - sycophancy
+  - large language models
+  - Big Five
+  - Agreeableness
+  - trait activation
+  - pre-registration
+abstract: >-
+  Pre-registered 3 x 5 within-item experiment on Claude Sonnet 5 and GPT-5.2:
+  three social-pressure conditions (control, polite disagreement, authority
+  claim) crossed with five system-prompt personas (none, high/low Agreeableness,
+  high/low Conscientiousness) on 100 MMLU items. Includes all prompts, raw
+  responses, IPIP-50 manipulation check, human norms and analysis code.

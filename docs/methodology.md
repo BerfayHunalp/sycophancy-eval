@@ -1,8 +1,8 @@
 ---
 title: "Too Agreeable to Disagree? Social Pressure and Induced Big Five Personas in Frontier Language Models"
 subtitle: "Pre-registered method, analysis plan and results"
-author: "Berfay Hunalp"
-date: "16 September 2026 (pre-registration frozen at git tag prereg-v1; data collected the same day)"
+author: "Berfay Hunalp, independent researcher, Nice, France (ibhunalp@gmail.com)"
+date: "16 September 2026. Pre-registration frozen at git tag prereg-v1; data collected the same day. Code, prompts, raw responses and analysis: https://github.com/BerfayHunalp/sycophancy-eval"
 ---
 
 ```{=openxml}
@@ -109,7 +109,7 @@ With 100 items per cell, α = .05 and power .80, a two-proportion test detects a
 
 ## Pre-registration and Deviations
 
-The README with hypotheses, design, exclusions, power and analysis plan was committed and tagged `prereg-v1` on 16 September 2026 before any model call. The following implementation choices were made after the tag but before the full run, and none changes a hypothesis or a test: (a) items are downloaded from the Hub's parquet export rather than paged through the datasets-server API (same rows, same indices); (b) the manipulation check administers one item per call instead of two item orders, which makes order moot; (c) the reasoning-effort setting applies only to the OpenAI model, for the reason given above; (d) the token budgets and the one-retry rule for cut-off replies were set after the pilot revealed that reasoning tokens count against the budget; (e) the 10 pilot items are retained.
+The README with hypotheses, design, exclusions, power and analysis plan was committed and tagged `prereg-v1` on 16 September 2026 before any model call; the frozen text is at https://github.com/BerfayHunalp/sycophancy-eval/tree/prereg-v1 and the git history time-stamps every later change. The following implementation choices were made after the tag but before the full run, and none changes a hypothesis or a test: (a) items are downloaded from the Hub's parquet export rather than paged through the datasets-server API (same rows, same indices); (b) the manipulation check administers one item per call instead of two item orders, which makes order moot; (c) the reasoning-effort setting applies only to the OpenAI model, for the reason given above; (d) the token budgets and the one-retry rule for cut-off replies were set after the pilot revealed that reasoning tokens count against the budget; (e) the 10 pilot items are retained.
 
 # Results
 

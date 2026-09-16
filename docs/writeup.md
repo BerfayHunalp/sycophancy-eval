@@ -1,6 +1,6 @@
-# Too agreeable to disagree? A claimed teacher flips Claude Sonnet 5's answer 82 % of the time, and the model's "personality" changes that number by up to 60 points
+# A claimed teacher flips Claude Sonnet 5's answer 82 % of the time, and the assistant's "personality" moves that number by up to 60 points
 
-*Draft for the Alignment Forum / LessWrong. Pre-registered at git tag `prereg-v1`, data collected the same day, everything public: https://github.com/BerfayHunalp/sycophancy-eval. APA-format method and full results: `docs/Methodology_APA.docx`.*
+*Epistemic status: pre-registered experiment, hypotheses and tests frozen in git before the first model call, 4,000 calls, every raw response public. Two models, one day, 100 items per cell, so effects under about 15 points are invisible. The manipulation check passed on the target trait and failed on discriminant validity; I say so below rather than in a footnote. Repo: https://github.com/BerfayHunalp/sycophancy-eval. Full APA-format write-up: https://github.com/BerfayHunalp/sycophancy-eval/blob/main/docs/Methodology_APA.docx.*
 
 ## TL;DR
 
@@ -57,6 +57,8 @@ Agreeableness effect (high minus low) by pressure:
 
 Difference-in-differences authority minus control: +0.28 [0.19, 0.37] and +0.25 [0.16, 0.33], item bootstrap. Control is at floor for everyone, so the honest comparison is polite → authority, and it still triples to tenfold. The trait shows up in proportion to the cue. That is trait activation theory, in a language model.
 
+![Flip rate by pressure condition and persona, 95 % Wilson CIs](https://raw.githubusercontent.com/BerfayHunalp/sycophancy-eval/main/analysis/change_rate.png)
+
 ### H2: hedging (supported, both models)
 
 Items the model itself rated below 80 confidence flipped 51 % vs 29 % on Sonnet (pre-registered threshold). GPT-5.2 rated almost everything 90+, so the pre-declared fallback, a median split at 95, applied: 26 % vs 10 %. Both *p* < .001. Wrong Turn-1 answers also flipped more than right ones under authority (Sonnet 82 % vs 68 %, GPT-5.2 66 % vs 35 %).
@@ -64,6 +66,8 @@ Items the model itself rated below 80 confidence flipped 51 % vs 29 % on Sonnet 
 ### Manipulation check: did the personas take? (yes, too well)
 
 All 500 IPIP-50 items parsed. Against 603,322 humans, the high and low Agreeableness personas sit 5.4 SD apart on Agreeableness on both models, and the Conscientiousness personas 5.3–5.4 SD apart on Conscientiousness. They answered at the scale ceiling (5.0) and floor (1.0): caricatures, not people. The pre-registered discriminant criterion, under 0.5 SD movement on the other four factors, **failed** for all four manipulations. High personas rated themselves better on everything, low personas worse (Sonnet's low-C persona also dropped 1.3 SD on Agreeableness and 1.7 on Intellect). So each persona is trait plus valence. Valence alone cannot explain the behaviour, though: the two unpleasant personas pushed sycophancy in opposite directions. One more number worth having: with no persona at all, both models describe themselves as agreeable (+0.9 SD), conscientious (+1.0 to +1.6) and extremely emotionally stable (+2.1). The default assistant already is the nice guy.
+
+![IPIP-50 profiles of the five personas, z against 603,322 humans](https://raw.githubusercontent.com/BerfayHunalp/sycophancy-eval/main/analysis/ipip_profiles.png)
 
 ## What surprised me
 
