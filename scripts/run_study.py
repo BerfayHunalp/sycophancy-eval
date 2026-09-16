@@ -18,12 +18,10 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from tqdm import tqdm
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (CONDITIONS, RESULTS, Client, FatalAPIError, Recorder, build_t1_messages,  # noqa: E402
                     build_t2_messages, get_key, load_done, load_items, load_personas, make_key,
-                    now_iso, parse_answer, parse_confidence, persona_names, print_tally,
+                    now_iso, parse_answer, parse_confidence, persona_names, print_tally, run_all,
                     slugify, system_prompt)
 
 DEFAULT_MODELS = ["anthropic/claude-sonnet-5", "openai/gpt-5.2"]
@@ -64,12 +62,35 @@ def record(ctx: Ctx, model: str, persona: str, item: dict, turn: str, condition:
     return rec
 
 
+def truncated(res: dict) -> bool:
+    """Reply cut off by max_tokens (reasoning or a worked solution ate the budget) with no parseable letter."""
+    return res["status"] == "empty" or (
+        res["status"] == "ok" and res.get("finish_reason") == "length"
+        and parse_answer(res["content"])[1] != "ok")
+
+
 async def call(ctx: Ctx, model: str, messages: list[dict], max_tokens: int) -> dict:
-    """One chat call; an empty reply (reasoning burned the budget) gets one retry with more room."""
+    """One chat call; a truncated reply gets one retry with double the token budget."""
     res = await ctx.client.chat(model, messages, max_tokens)
-    if res["status"] == "empty":
+    if truncated(res):
         res = await ctx.client.chat(model, messages, max_tokens * EMPTY_RETRY_FACTOR)
     return res
+
+
+def prune_truncated(done: dict[str, dict], model: str, conditions: list[str]) -> int:
+    """Drop Turn-1 records that were cut off before an answer, plus the Turn-2 records built on them.
+
+    Older records stay in the append-only file; analysis keeps the newest record per key.
+    """
+    dropped = 0
+    for key, rec in list(done.items()):
+        if rec.get("turn") != "t1" or not truncated(rec):
+            continue
+        del done[key]
+        dropped += 1
+        for c in conditions:
+            dropped += done.pop(make_key(model, rec["persona"], rec["item_id"], c), None) is not None
+    return dropped
 
 
 async def run_t2(ctx: Ctx, model: str, persona: str, item: dict, system: str,
@@ -96,20 +117,22 @@ async def run_item(ctx: Ctx, model: str, persona: str, item: dict) -> None:
 
 
 async def run_model(args: argparse.Namespace, client: Client, personas: dict,
-                    items: list[dict], model: str) -> None:
+                    items: list[dict], model: str, position: int) -> None:
     path = RESULTS / "raw" / f"{slugify(model)}.jsonl"
     done = load_done(path)
+    pruned = prune_truncated(done, model, args.conditions)
+    if pruned:
+        print(f"{model}: re-running {pruned} record(s) whose Turn 1 was cut off before an answer")
     with Recorder(path) as rec:
         ctx = Ctx(args, client, personas, args.run_id, rec, done)
         jobs = [(p, it) for p in args.personas for it in items]
         todo = [(p, it) for p, it in jobs
                 if any(make_key(model, p, it["item_id"], c) not in done for c in ["t1", *args.conditions])]
-        print(f"\n{model}: {len(done)} records done, {len(todo)}/{len(jobs)} (persona,item) jobs to run")
+        print(f"{model}: {len(done)} records done, {len(todo)}/{len(jobs)} (persona,item) jobs to run")
         tasks = [asyncio.ensure_future(run_item(ctx, model, p, it)) for p, it in todo]
-        for fut in tqdm(asyncio.as_completed(tasks), total=len(tasks), unit="item", ncols=90):
-            await fut
+        await run_all(tasks, desc=slugify(model)[:28], position=position)
         t1, t2 = ctx.live["t1"], ctx.live["t2"]
-        print(f"  new records {rec.count} | parse rate t1 {t1[0]}/{t1[1]}  t2 {t2[0]}/{t2[1]}")
+        print(f"\n{model}: new records {rec.count} | parse rate t1 {t1[0]}/{t1[1]}  t2 {t2[0]}/{t2[1]}")
 
 
 def preflight(models: list[str]) -> None:
@@ -140,10 +163,13 @@ def main() -> None:
     ap.add_argument("--personas", nargs="+", default=None, help="default: every persona in data/personas.json")
     ap.add_argument("--conditions", nargs="+", default=list(CONDITIONS), choices=list(CONDITIONS))
     ap.add_argument("--limit", type=int, default=None, help="first N items only (pilot)")
-    ap.add_argument("--concurrency", type=int, default=6)
+    ap.add_argument("--concurrency", type=int, default=4, help="max in-flight calls across all models")
+    ap.add_argument("--rpm", type=float, default=18.0, help="max request starts per minute PER MODEL "
+                    "(OpenRouter new accounts allow 20)")
     ap.add_argument("--timeout", type=float, default=120.0)
-    ap.add_argument("--max-tokens-t1", type=int, default=300)
-    ap.add_argument("--max-tokens-t2", type=int, default=200)
+    ap.add_argument("--max-tokens-t1", type=int, default=1500,
+                    help="reasoning tokens count against this on OpenRouter; a cut-off reply is retried once at 2x")
+    ap.add_argument("--max-tokens-t2", type=int, default=800)
     ap.add_argument("--run-id", default="run-01")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -162,12 +188,12 @@ def main() -> None:
         return
 
     preflight(args.models)
-    client = Client(get_key(), concurrency=args.concurrency, timeout=args.timeout)
+    client = Client(get_key(), concurrency=args.concurrency, timeout=args.timeout, rpm=args.rpm)
 
     async def go() -> None:
-        try:
-            for model in args.models:
-                await run_model(args, client, personas, items, model)
+        try:  # models run side by side: the per-model rpm cap is the bottleneck, not the client
+            await asyncio.gather(*(run_model(args, client, personas, items, m, i)
+                                   for i, m in enumerate(args.models)))
         finally:
             await client.aclose()
             print_tally(client)

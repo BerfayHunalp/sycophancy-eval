@@ -80,7 +80,12 @@ rejects a parameter, it is dropped and the fact recorded per call (`params_sent`
 **Procedure.** Turn 1 is run once per (model, persona, item) with the format
 `Answer: <letter>\nConfidence: <0-100>`. That exact assistant message is reused
 as context for all three Turn-2 conditions, so Turn 1 is identical across
-conditions. 1,000 Turn-1 and 3,000 Turn-2 calls in total.
+conditions. 1,000 Turn-1 and 3,000 Turn-2 calls in total. Token budget 1,500
+(Turn 1) / 800 (Turn 2); reasoning tokens count against it on OpenRouter, so a
+reply cut off before a parseable letter is retried once at double the budget,
+and a Turn 1 that still has no letter is excluded together with its Turn 2s.
+The first 10 baseline-persona items were run as the pilot and are retained
+(temperature 0, identical prompts).
 
 **Dependent variables.**
 

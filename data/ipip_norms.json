@@ -1,0 +1,395 @@
+{
+  "source": "Open Psychometrics IPIP-FFM data, collected 2016-2018, file IPIP-FFM-data-8Nov2018.zip",
+  "cleaning": "IPC == 1 and all 50 items answered (no 0)",
+  "scoring": "factor = mean of 10 items on 1-5 after reversing minus-keyed items (6 - x)",
+  "anchor_caveat": "sample used Disagree(1)-Neutral(3)-Agree(5); personas use IPIP accuracy anchors",
+  "items": {
+    "EXT1": {
+      "text": "I am the life of the party.",
+      "keyed": 1,
+      "factor": "E",
+      "mean": 2.5769
+    },
+    "EXT2": {
+      "text": "I don't talk a lot.",
+      "keyed": -1,
+      "factor": "E",
+      "mean": 2.8482
+    },
+    "EXT3": {
+      "text": "I feel comfortable around people.",
+      "keyed": 1,
+      "factor": "E",
+      "mean": 3.2307
+    },
+    "EXT4": {
+      "text": "I keep in the background.",
+      "keyed": -1,
+      "factor": "E",
+      "mean": 3.2193
+    },
+    "EXT5": {
+      "text": "I start conversations.",
+      "keyed": 1,
+      "factor": "E",
+      "mean": 3.2485
+    },
+    "EXT6": {
+      "text": "I have little to say.",
+      "keyed": -1,
+      "factor": "E",
+      "mean": 2.4241
+    },
+    "EXT7": {
+      "text": "I talk to a lot of different people at parties.",
+      "keyed": 1,
+      "factor": "E",
+      "mean": 2.7109
+    },
+    "EXT8": {
+      "text": "I don't like to draw attention to myself.",
+      "keyed": -1,
+      "factor": "E",
+      "mean": 3.4695
+    },
+    "EXT9": {
+      "text": "I don't mind being the center of attention.",
+      "keyed": 1,
+      "factor": "E",
+      "mean": 2.9542
+    },
+    "EXT10": {
+      "text": "I am quiet around strangers.",
+      "keyed": -1,
+      "factor": "E",
+      "mean": 3.6219
+    },
+    "EST1": {
+      "text": "I get stressed out easily.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 3.3108
+    },
+    "EST2": {
+      "text": "I am relaxed most of the time.",
+      "keyed": 1,
+      "factor": "N",
+      "mean": 3.171
+    },
+    "EST3": {
+      "text": "I worry about things.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 3.8789
+    },
+    "EST4": {
+      "text": "I seldom feel blue.",
+      "keyed": 1,
+      "factor": "N",
+      "mean": 2.6592
+    },
+    "EST5": {
+      "text": "I am easily disturbed.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 2.8574
+    },
+    "EST6": {
+      "text": "I get upset easily.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 2.87
+    },
+    "EST7": {
+      "text": "I change my mood a lot.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 3.0645
+    },
+    "EST8": {
+      "text": "I have frequent mood swings.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 2.702
+    },
+    "EST9": {
+      "text": "I get irritated easily.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 3.1021
+    },
+    "EST10": {
+      "text": "I often feel blue.",
+      "keyed": -1,
+      "factor": "N",
+      "mean": 2.8577
+    },
+    "AGR1": {
+      "text": "I feel little concern for others.",
+      "keyed": -1,
+      "factor": "A",
+      "mean": 2.2357
+    },
+    "AGR2": {
+      "text": "I am interested in people.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.8541
+    },
+    "AGR3": {
+      "text": "I insult people.",
+      "keyed": -1,
+      "factor": "A",
+      "mean": 2.268
+    },
+    "AGR4": {
+      "text": "I sympathize with others' feelings.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.9467
+    },
+    "AGR5": {
+      "text": "I am not interested in other people's problems.",
+      "keyed": -1,
+      "factor": "A",
+      "mean": 2.3033
+    },
+    "AGR6": {
+      "text": "I have a soft heart.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.7575
+    },
+    "AGR7": {
+      "text": "I am not really interested in others.",
+      "keyed": -1,
+      "factor": "A",
+      "mean": 2.2352
+    },
+    "AGR8": {
+      "text": "I take time out for others.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.6842
+    },
+    "AGR9": {
+      "text": "I feel others' emotions.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.7919
+    },
+    "AGR10": {
+      "text": "I make people feel at ease.",
+      "keyed": 1,
+      "factor": "A",
+      "mean": 3.597
+    },
+    "CSN1": {
+      "text": "I am always prepared.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 3.3199
+    },
+    "CSN2": {
+      "text": "I leave my belongings around.",
+      "keyed": -1,
+      "factor": "C",
+      "mean": 2.9966
+    },
+    "CSN3": {
+      "text": "I pay attention to details.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 4.0059
+    },
+    "CSN4": {
+      "text": "I make a mess of things.",
+      "keyed": -1,
+      "factor": "C",
+      "mean": 2.6538
+    },
+    "CSN5": {
+      "text": "I get chores done right away.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 2.5838
+    },
+    "CSN6": {
+      "text": "I often forget to put things back in their proper place.",
+      "keyed": -1,
+      "factor": "C",
+      "mean": 2.8599
+    },
+    "CSN7": {
+      "text": "I like order.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 3.7306
+    },
+    "CSN8": {
+      "text": "I shirk my duties.",
+      "keyed": -1,
+      "factor": "C",
+      "mean": 2.4923
+    },
+    "CSN9": {
+      "text": "I follow a schedule.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 3.1594
+    },
+    "CSN10": {
+      "text": "I am exacting in my work.",
+      "keyed": 1,
+      "factor": "C",
+      "mean": 3.6287
+    },
+    "OPN1": {
+      "text": "I have a rich vocabulary.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 3.777
+    },
+    "OPN2": {
+      "text": "I have difficulty understanding abstract ideas.",
+      "keyed": -1,
+      "factor": "O",
+      "mean": 2.0213
+    },
+    "OPN3": {
+      "text": "I have a vivid imagination.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 4.0665
+    },
+    "OPN4": {
+      "text": "I am not interested in abstract ideas.",
+      "keyed": -1,
+      "factor": "O",
+      "mean": 1.9515
+    },
+    "OPN5": {
+      "text": "I have excellent ideas.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 3.8344
+    },
+    "OPN6": {
+      "text": "I do not have a good imagination.",
+      "keyed": -1,
+      "factor": "O",
+      "mean": 1.878
+    },
+    "OPN7": {
+      "text": "I am quick to understand things.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 4.0591
+    },
+    "OPN8": {
+      "text": "I use difficult words.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 3.2842
+    },
+    "OPN9": {
+      "text": "I spend time reflecting on things.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 4.221
+    },
+    "OPN10": {
+      "text": "I am full of ideas.",
+      "keyed": 1,
+      "factor": "O",
+      "mean": 3.9976
+    }
+  },
+  "factors": {
+    "E": {
+      "mean": 2.9138,
+      "sd": 0.9112,
+      "n": 603322,
+      "items": [
+        "EXT1",
+        "EXT2",
+        "EXT3",
+        "EXT4",
+        "EXT5",
+        "EXT6",
+        "EXT7",
+        "EXT8",
+        "EXT9",
+        "EXT10"
+      ]
+    },
+    "N": {
+      "mean": 2.9187,
+      "sd": 0.8607,
+      "n": 603322,
+      "items": [
+        "EST1",
+        "EST2",
+        "EST3",
+        "EST4",
+        "EST5",
+        "EST6",
+        "EST7",
+        "EST8",
+        "EST9",
+        "EST10"
+      ]
+    },
+    "A": {
+      "mean": 3.7589,
+      "sd": 0.7363,
+      "n": 603322,
+      "items": [
+        "AGR1",
+        "AGR2",
+        "AGR3",
+        "AGR4",
+        "AGR5",
+        "AGR6",
+        "AGR7",
+        "AGR8",
+        "AGR9",
+        "AGR10"
+      ]
+    },
+    "C": {
+      "mean": 3.3426,
+      "sd": 0.7391,
+      "n": 603322,
+      "items": [
+        "CSN1",
+        "CSN2",
+        "CSN3",
+        "CSN4",
+        "CSN5",
+        "CSN6",
+        "CSN7",
+        "CSN8",
+        "CSN9",
+        "CSN10"
+      ]
+    },
+    "O": {
+      "mean": 3.9389,
+      "sd": 0.6183,
+      "n": 603322,
+      "items": [
+        "OPN1",
+        "OPN2",
+        "OPN3",
+        "OPN4",
+        "OPN5",
+        "OPN6",
+        "OPN7",
+        "OPN8",
+        "OPN9",
+        "OPN10"
+      ]
+    }
+  }
+}

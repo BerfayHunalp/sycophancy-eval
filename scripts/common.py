@@ -43,7 +43,11 @@ FORMAT_LIKERT = "Reply in exactly this format and nothing else:\nRating: <1-5>"
 REASONING_BY_PREFIX = {"openai/": {"effort": "low"}}
 
 RETRY_STATUSES = {408, 409, 425, 429, 500, 502, 503, 504}
-FATAL_STATUSES = {401, 402, 403}
+FATAL_STATUSES = {401, 403}
+# 402 is fatal when credits are really gone, but OpenRouter also returns it when the
+# *reserved* budget of concurrent in-flight calls exceeds the balance; that one clears.
+TRANSIENT_402_MARKERS = ("in_flight", "in-flight")
+IN_FLIGHT_BACKOFF_S = 5.0
 DROPPABLE_PARAMS = ("temperature", "reasoning")
 
 
@@ -242,10 +246,34 @@ def parse_likert(text: str | None) -> int | None:
 
 # ----------------------------------------------------------------------------- client
 
-class Client:
-    """Async OpenRouter chat client with a concurrency cap, retries and usage/cost tally."""
+class RateLimiter:
+    """Minimum spacing between request starts, per key (OpenRouter new accounts: 20 rpm per model)."""
 
-    def __init__(self, key: str, concurrency: int = 6, timeout: float = 120.0, max_attempts: int = 6):
+    def __init__(self, rpm: float):
+        self.interval = 60.0 / rpm if rpm > 0 else 0.0
+        self._next: dict[str, float] = {}
+        self._lock = asyncio.Lock()
+
+    async def wait(self, key: str) -> None:
+        if not self.interval:
+            return
+        async with self._lock:
+            now = time.monotonic()
+            start = max(now, self._next.get(key, now))
+            self._next[key] = start + self.interval
+        await asyncio.sleep(max(0.0, start - now))
+
+    def penalize(self, key: str, seconds: float) -> None:
+        """A 429 means the server disagrees with our pacing: push the next slot out."""
+        now = time.monotonic()
+        self._next[key] = max(self._next.get(key, now), now + seconds)
+
+
+class Client:
+    """Async OpenRouter chat client with concurrency cap, per-model pacing, retries and cost tally."""
+
+    def __init__(self, key: str, concurrency: int = 4, timeout: float = 120.0,
+                 max_attempts: int = 8, rpm: float = 18.0):
         headers = {
             "Authorization": f"Bearer {key}",
             "Content-Type": "application/json",
@@ -257,9 +285,10 @@ class Client:
             timeout=httpx.Timeout(connect=10.0, read=timeout, write=10.0, pool=10.0),
         )
         self._sem = asyncio.Semaphore(concurrency)
+        self._limiter = RateLimiter(rpm)
         self.max_attempts = max_attempts
         self.tally = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0,
-                      "reasoning_tokens": 0, "cost_usd": 0.0, "errors": 0}
+                      "reasoning_tokens": 0, "cost_usd": 0.0, "errors": 0, "retries": 0}
 
     async def aclose(self) -> None:
         await self._client.aclose()
@@ -282,8 +311,12 @@ class Client:
         t0 = time.perf_counter()
         last_err = "unknown"
         attempt = 0
+        model = body["model"]
         while attempt < self.max_attempts:
             attempt += 1
+            if attempt > 1:
+                self.tally["retries"] += 1
+            await self._limiter.wait(model)
             try:
                 r = await self._client.post("/chat/completions", json=body)
             except (httpx.TimeoutException, httpx.TransportError) as exc:
@@ -296,6 +329,11 @@ class Client:
                     last_err = f"provider error: {json.dumps(data.get('error'))[:300]}"
                 elif r.status_code in FATAL_STATUSES:
                     raise FatalAPIError(f"HTTP {r.status_code}: {r.text[:300]}")
+                elif r.status_code == 402:
+                    if not any(m in r.text for m in TRANSIENT_402_MARKERS):
+                        raise FatalAPIError(f"HTTP 402 (credits exhausted): {r.text[:300]}")
+                    last_err = f"HTTP 402 in-flight budget: {r.text[:120]}"
+                    delay = max(delay, IN_FLIGHT_BACKOFF_S)
                 elif r.status_code == 400:
                     msg = r.text.lower()
                     param = next((p for p in DROPPABLE_PARAMS if p in body and p in msg), None)
@@ -310,6 +348,8 @@ class Client:
                     ra = r.headers.get("Retry-After")
                     if ra and ra.isdigit():
                         delay = max(delay, float(ra))
+                    if r.status_code == 429:
+                        self._limiter.penalize(model, delay)
                 else:
                     return self._fail(f"HTTP {r.status_code}: {r.text[:300]}", attempt, body, dropped, t0)
             if attempt < self.max_attempts:
@@ -360,6 +400,20 @@ def now_iso() -> str:
 
 def print_tally(client: Client) -> None:
     t = client.tally
-    print(f"calls {t['calls']}  errors {t['errors']}  prompt {t['prompt_tokens']}  "
+    print(f"calls {t['calls']}  errors {t['errors']}  retries {t['retries']}  prompt {t['prompt_tokens']}  "
           f"completion {t['completion_tokens']}  reasoning {t['reasoning_tokens']}  "
           f"cost ${t['cost_usd']:.4f}")
+
+
+async def run_all(tasks: list[asyncio.Task], desc: str, position: int = 0) -> None:
+    """Await tasks with a progress bar; on the first exception cancel the rest and re-raise."""
+    from tqdm import tqdm  # local import keeps common importable without tqdm in analysis-only envs
+    try:
+        for fut in tqdm(asyncio.as_completed(tasks), total=len(tasks), unit="call",
+                        ncols=90, desc=desc, position=position, leave=True):
+            await fut
+    except BaseException:
+        for t in tasks:
+            t.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+        raise
