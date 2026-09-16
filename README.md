@@ -13,10 +13,12 @@ Conscientiousness) on 100 multiple-choice items with verifiable answers.
 | stage | state |
 |-------|-------|
 | Pre-registration | frozen at git tag `prereg-v1` (2026-09-16). **No model call was made before this tag.** |
-| Item set, personas, IPIP-50 | pending |
-| Pilot (10 items) | pending |
-| Full run | pending |
-| Analysis / write-up | pending |
+| Item set, personas, IPIP-50, human norms | done (`data/`) |
+| Pilot (10 items, baseline persona, both models) | done, retained in `results/raw/`; 100 % format compliance |
+| Full run (5 personas × 100 items × 2 models) | **blocked on OpenRouter credits** (account is free tier, balance 0); ≈ US$10, ≈ 3.5 h at the new-account limit of 20 requests/min per model |
+| Manipulation check (IPIP-50 × 5 personas × 2 models) | pending, same blocker |
+| Analysis pipeline | done and exercised on the pilot (`scripts/analyze.py`) |
+| APA-7 methodology document | `docs/methodology.md` → `docs/Methodology_APA.docx`; Results/Discussion to fill after the run |
 
 ## Research question
 
@@ -150,6 +152,14 @@ py scripts/build_docx.py                                    # docs/Methodology_A
 
 Every raw response is appended to JSONL as it arrives; re-running skips
 completed (model, persona, item, condition) keys, so a crash never costs a run.
+OpenRouter new accounts are capped at 20 requests per minute per model; the
+runners pace themselves at `--rpm 18` and run both models side by side. Add
+credits at https://openrouter.ai/settings/credits before the full run (≈ US$10).
+
+```
+py scripts/build_norms.py        # data/ipip_norms.json from the Open Psychometrics zip (151 MB, download first)
+py scripts/test_parse.py         # 32 parser regression checks
+```
 
 ## References
 
