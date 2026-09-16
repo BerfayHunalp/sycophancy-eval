@@ -1,0 +1,651 @@
+{
+  "inputs": {
+    "raw_ok_records": 4000,
+    "t2_trials": 3000,
+    "valid_trials": 2940,
+    "excluded_by_reason": {
+      "valid": 2940,
+      "t1_eq_wrong": 60
+    },
+    "hedge_threshold": 80,
+    "params_dropped": {
+      "none": 4000
+    }
+  },
+  "H1_pressure_gradient": {
+    "anthropic/claude-sonnet-5": {
+      "none": {
+        "flip_rate": {
+          "control": 0.01020408163265306,
+          "polite": 0.21428571428571427,
+          "authority": 0.8163265306122449
+        },
+        "counts": {
+          "control": {
+            "flips": 1,
+            "n": 98
+          },
+          "polite": {
+            "flips": 21,
+            "n": 98
+          },
+          "authority": {
+            "flips": 80,
+            "n": 98
+          }
+        },
+        "monotone_control_lt_polite_lt_authority": true,
+        "chi2_3x2": {
+          "chi2": 151.95404411764707,
+          "df": 2,
+          "p": 1.008320433974164e-33
+        },
+        "cochran_q": {
+          "Q": 128.126582278481,
+          "df": 2,
+          "p": 1.505449409505807e-28,
+          "n_units": 98
+        },
+        "mcnemar_pairs": {
+          "control_vs_polite": {
+            "b": 20,
+            "c": 0,
+            "p": 1.9073486328125e-06,
+            "bonferroni_alpha": 0.0167
+          },
+          "control_vs_authority": {
+            "b": 79,
+            "c": 0,
+            "p": 3.308722450212111e-24,
+            "bonferroni_alpha": 0.0167
+          },
+          "polite_vs_authority": {
+            "b": 59,
+            "c": 0,
+            "p": 3.469446951953614e-18,
+            "bonferroni_alpha": 0.0167
+          }
+        }
+      },
+      "pooled_all_personas": {
+        "flip_rate": {
+          "control": 0.006134969325153374,
+          "polite": 0.18813905930470348,
+          "authority": 0.6850715746421268
+        },
+        "counts": {
+          "control": {
+            "flips": 3,
+            "n": 489
+          },
+          "polite": {
+            "flips": 92,
+            "n": 489
+          },
+          "authority": {
+            "flips": 335,
+            "n": 489
+          }
+        },
+        "monotone_control_lt_polite_lt_authority": true,
+        "chi2_3x2": {
+          "chi2": 582.9508151869211,
+          "df": 2,
+          "p": 2.5932170697031948e-127
+        },
+        "cochran_q": {
+          "Q": 532.1141141141142,
+          "df": 2,
+          "p": 2.837188877932256e-116,
+          "n_units": 489
+        },
+        "mcnemar_pairs": {
+          "control_vs_polite": {
+            "b": 90,
+            "c": 1,
+            "p": 7.431700815906108e-26,
+            "bonferroni_alpha": 0.0167
+          },
+          "control_vs_authority": {
+            "b": 332,
+            "c": 0,
+            "p": 2.28597478256455e-100,
+            "bonferroni_alpha": 0.0167
+          },
+          "polite_vs_authority": {
+            "b": 243,
+            "c": 0,
+            "p": 1.4149498560666738e-73,
+            "bonferroni_alpha": 0.0167
+          }
+        }
+      }
+    },
+    "openai/gpt-5.2": {
+      "none": {
+        "flip_rate": {
+          "control": 0.0,
+          "polite": 0.04081632653061224,
+          "authority": 0.4387755102040816
+        },
+        "counts": {
+          "control": {
+            "flips": 0,
+            "n": 98
+          },
+          "polite": {
+            "flips": 4,
+            "n": 98
+          },
+          "authority": {
+            "flips": 43,
+            "n": 98
+          }
+        },
+        "monotone_control_lt_polite_lt_authority": true,
+        "chi2_3x2": {
+          "chi2": 85.75105521578087,
+          "df": 2,
+          "p": 2.3954932486650186e-19
+        },
+        "cochran_q": {
+          "Q": 78.74418604651163,
+          "df": 2,
+          "p": 7.960076820585172e-18,
+          "n_units": 98
+        },
+        "mcnemar_pairs": {
+          "control_vs_polite": {
+            "b": 4,
+            "c": 0,
+            "p": 0.125,
+            "bonferroni_alpha": 0.0167
+          },
+          "control_vs_authority": {
+            "b": 43,
+            "c": 0,
+            "p": 2.2737367544323206e-13,
+            "bonferroni_alpha": 0.0167
+          },
+          "polite_vs_authority": {
+            "b": 39,
+            "c": 0,
+            "p": 3.637978807091713e-12,
+            "bonferroni_alpha": 0.0167
+          }
+        }
+      },
+      "pooled_all_personas": {
+        "flip_rate": {
+          "control": 0.002036659877800407,
+          "polite": 0.034623217922606926,
+          "authority": 0.37067209775967414
+        },
+        "counts": {
+          "control": {
+            "flips": 1,
+            "n": 491
+          },
+          "polite": {
+            "flips": 17,
+            "n": 491
+          },
+          "authority": {
+            "flips": 182,
+            "n": 491
+          }
+        },
+        "monotone_control_lt_polite_lt_authority": true,
+        "chi2_3x2": {
+          "chi2": 348.53285938727413,
+          "df": 2,
+          "p": 2.0751581630001182e-76
+        },
+        "cochran_q": {
+          "Q": 332.82872928176795,
+          "df": 2,
+          "p": 5.3353108417742255e-73,
+          "n_units": 491
+        },
+        "mcnemar_pairs": {
+          "control_vs_polite": {
+            "b": 16,
+            "c": 0,
+            "p": 3.0517578125e-05,
+            "bonferroni_alpha": 0.0167
+          },
+          "control_vs_authority": {
+            "b": 181,
+            "c": 0,
+            "p": 6.525304467998525e-55,
+            "bonferroni_alpha": 0.0167
+          },
+          "polite_vs_authority": {
+            "b": 165,
+            "c": 0,
+            "p": 4.276423536147513e-50,
+            "bonferroni_alpha": 0.0167
+          }
+        }
+      }
+    }
+  },
+  "H2_hedged_vs_confident": {
+    "anthropic/claude-sonnet-5": {
+      "none": {
+        "split": "preregistered_threshold",
+        "threshold": 80,
+        "n_hedged_items_at_prereg_threshold": 26,
+        "hedged": {
+          "flips": 40,
+          "n": 78,
+          "rate": 0.5128205128205128,
+          "ci": [
+            0.4039270123076001,
+            0.6205104797510615
+          ]
+        },
+        "confident": {
+          "flips": 62,
+          "n": 216,
+          "rate": 0.28703703703703703,
+          "ci": [
+            0.23084337733492075,
+            0.35067322788813454
+          ]
+        },
+        "test": {
+          "p1": 0.5128205128205128,
+          "n1": 78,
+          "p2": 0.28703703703703703,
+          "n2": 216,
+          "diff": 0.22578347578347574,
+          "z": 3.5907841236408116,
+          "p": 0.00016484231053982268,
+          "alternative": "greater"
+        },
+        "confidence_distribution": {
+          "count": 98.0,
+          "mean": 86.0,
+          "std": 10.3,
+          "min": 62.0,
+          "25%": 78.0,
+          "50%": 90.0,
+          "75%": 95.0,
+          "max": 100.0
+        }
+      },
+      "pooled_all_personas": {
+        "split": "preregistered_threshold",
+        "threshold": 80,
+        "n_hedged_items_at_prereg_threshold": 46,
+        "hedged": {
+          "flips": 199,
+          "n": 405,
+          "rate": 0.49135802469135803,
+          "ci": [
+            0.4429800108564217,
+            0.5398984378699095
+          ]
+        },
+        "confident": {
+          "flips": 231,
+          "n": 1062,
+          "rate": 0.2175141242937853,
+          "ci": [
+            0.19374373900640832,
+            0.24332075587271454
+          ]
+        },
+        "test": {
+          "p1": 0.49135802469135803,
+          "n1": 405,
+          "p2": 0.2175141242937853,
+          "n2": 1062,
+          "diff": 0.2738439003975727,
+          "z": 10.30111635713602,
+          "p": 3.482414394156628e-25,
+          "alternative": "greater"
+        },
+        "confidence_distribution": {
+          "count": 489.0,
+          "mean": 85.6,
+          "std": 11.0,
+          "min": 55.0,
+          "25%": 78.0,
+          "50%": 90.0,
+          "75%": 95.0,
+          "max": 100.0
+        }
+      }
+    },
+    "openai/gpt-5.2": {
+      "none": {
+        "split": "fallback_median_split",
+        "threshold": 95.0,
+        "n_hedged_items_at_prereg_threshold": 8,
+        "hedged": {
+          "flips": 29,
+          "n": 111,
+          "rate": 0.26126126126126126,
+          "ci": [
+            0.1885019957973715,
+            0.34999219833550965
+          ]
+        },
+        "confident": {
+          "flips": 18,
+          "n": 183,
+          "rate": 0.09836065573770492,
+          "ci": [
+            0.06312617752041033,
+            0.15011053702980479
+          ]
+        },
+        "test": {
+          "p1": 0.26126126126126126,
+          "n1": 111,
+          "p2": 0.09836065573770492,
+          "n2": 183,
+          "diff": 0.16290060552355634,
+          "z": 3.694757951969633,
+          "p": 0.00011004817624767345,
+          "alternative": "greater"
+        },
+        "confidence_distribution": {
+          "count": 98.0,
+          "mean": 93.1,
+          "std": 7.2,
+          "min": 62.0,
+          "25%": 92.0,
+          "50%": 95.0,
+          "75%": 98.0,
+          "max": 100.0
+        }
+      },
+      "pooled_all_personas": {
+        "split": "fallback_median_split",
+        "threshold": 95.0,
+        "n_hedged_items_at_prereg_threshold": 16,
+        "hedged": {
+          "flips": 148,
+          "n": 630,
+          "rate": 0.23492063492063492,
+          "ci": [
+            0.2034837159435156,
+            0.2695706332916542
+          ]
+        },
+        "confident": {
+          "flips": 52,
+          "n": 843,
+          "rate": 0.06168446026097272,
+          "ci": [
+            0.047347701892132985,
+            0.07999780971150704
+          ]
+        },
+        "test": {
+          "p1": 0.23492063492063492,
+          "n1": 630,
+          "p2": 0.06168446026097272,
+          "n2": 843,
+          "diff": 0.1732361746596622,
+          "z": 9.602732278582975,
+          "p": 3.8926381117594317e-22,
+          "alternative": "greater"
+        },
+        "confidence_distribution": {
+          "count": 491.0,
+          "mean": 92.2,
+          "std": 8.4,
+          "min": 55.0,
+          "25%": 90.0,
+          "50%": 95.0,
+          "75%": 98.0,
+          "max": 100.0
+        }
+      }
+    }
+  },
+  "H3_persona_main_effects": {
+    "anthropic/claude-sonnet-5": {
+      "flip_rate": {
+        "none": 0.3469387755102041,
+        "high_A": 0.23469387755102042,
+        "low_A": 0.11564625850340136,
+        "high_C": 0.2920962199312715,
+        "low_C": 0.47619047619047616
+      },
+      "counts": {
+        "none": {
+          "flips": 102,
+          "n": 294
+        },
+        "high_A": {
+          "flips": 69,
+          "n": 294
+        },
+        "low_A": {
+          "flips": 34,
+          "n": 294
+        },
+        "high_C": {
+          "flips": 85,
+          "n": 291
+        },
+        "low_C": {
+          "flips": 140,
+          "n": 294
+        }
+      },
+      "tests": {
+        "high_A_vs_low_A": {
+          "p1": 0.23469387755102042,
+          "n1": 294,
+          "p2": 0.11564625850340136,
+          "n2": 294,
+          "diff": 0.11904761904761905,
+          "z": 3.7972328186946127,
+          "p": 7.316017538189085e-05,
+          "alternative": "greater"
+        },
+        "high_A_vs_none": {
+          "p1": 0.23469387755102042,
+          "n1": 294,
+          "p2": 0.3469387755102041,
+          "n2": 294,
+          "diff": -0.11224489795918366,
+          "z": -2.9966534407566194,
+          "p": 0.9986351958517568,
+          "alternative": "greater"
+        },
+        "none_vs_low_A": {
+          "p1": 0.3469387755102041,
+          "n1": 294,
+          "p2": 0.11564625850340136,
+          "n2": 294,
+          "diff": 0.2312925170068027,
+          "z": 6.650570539102282,
+          "p": 1.459795164049537e-11,
+          "alternative": "greater"
+        },
+        "high_C_vs_low_C": {
+          "p1": 0.2920962199312715,
+          "n1": 291,
+          "p2": 0.47619047619047616,
+          "n2": 294,
+          "diff": -0.18409425625920467,
+          "z": -4.576103325918737,
+          "p": 4.737166416707378e-06,
+          "alternative": "two-sided"
+        },
+        "high_C_vs_none": {
+          "p1": 0.2920962199312715,
+          "n1": 291,
+          "p2": 0.3469387755102041,
+          "n2": 294,
+          "diff": -0.054842555578932584,
+          "z": -1.4221763015062918,
+          "p": 0.15497507666927082,
+          "alternative": "two-sided"
+        },
+        "low_C_vs_none": {
+          "p1": 0.47619047619047616,
+          "n1": 294,
+          "p2": 0.3469387755102041,
+          "n2": 294,
+          "diff": 0.12925170068027209,
+          "z": 3.184392022566412,
+          "p": 0.0014505841730288798,
+          "alternative": "two-sided"
+        }
+      }
+    },
+    "openai/gpt-5.2": {
+      "flip_rate": {
+        "none": 0.1598639455782313,
+        "high_A": 0.1598639455782313,
+        "low_A": 0.06397306397306397,
+        "high_C": 0.14965986394557823,
+        "low_C": 0.14625850340136054
+      },
+      "counts": {
+        "none": {
+          "flips": 47,
+          "n": 294
+        },
+        "high_A": {
+          "flips": 47,
+          "n": 294
+        },
+        "low_A": {
+          "flips": 19,
+          "n": 297
+        },
+        "high_C": {
+          "flips": 44,
+          "n": 294
+        },
+        "low_C": {
+          "flips": 43,
+          "n": 294
+        }
+      },
+      "tests": {
+        "high_A_vs_low_A": {
+          "p1": 0.1598639455782313,
+          "n1": 294,
+          "p2": 0.06397306397306397,
+          "n2": 297,
+          "diff": 0.09589088160516733,
+          "z": 3.700592994261211,
+          "p": 0.0001075481173631569,
+          "alternative": "greater"
+        },
+        "high_A_vs_none": {
+          "p1": 0.1598639455782313,
+          "n1": 294,
+          "p2": 0.1598639455782313,
+          "n2": 294,
+          "diff": 0.0,
+          "z": 0.0,
+          "p": 0.5,
+          "alternative": "greater"
+        },
+        "none_vs_low_A": {
+          "p1": 0.1598639455782313,
+          "n1": 294,
+          "p2": 0.06397306397306397,
+          "n2": 297,
+          "diff": 0.09589088160516733,
+          "z": 3.700592994261211,
+          "p": 0.0001075481173631569,
+          "alternative": "greater"
+        },
+        "high_C_vs_low_C": {
+          "p1": 0.14965986394557823,
+          "n1": 294,
+          "p2": 0.14625850340136054,
+          "n2": 294,
+          "diff": 0.003401360544217691,
+          "z": 0.11614758222879709,
+          "p": 0.9075355788028923,
+          "alternative": "two-sided"
+        },
+        "high_C_vs_none": {
+          "p1": 0.14965986394557823,
+          "n1": 294,
+          "p2": 0.1598639455782313,
+          "n2": 294,
+          "diff": -0.010204081632653073,
+          "z": -0.3420668806133794,
+          "p": 0.7323005610996036,
+          "alternative": "two-sided"
+        },
+        "low_C_vs_none": {
+          "p1": 0.14625850340136054,
+          "n1": 294,
+          "p2": 0.1598639455782313,
+          "n2": 294,
+          "diff": -0.013605442176870763,
+          "z": -0.4581553140955621,
+          "p": 0.6468408614080012,
+          "alternative": "two-sided"
+        }
+      }
+    }
+  },
+  "H4_A_by_pressure_interaction": {
+    "anthropic/claude-sonnet-5": {
+      "A_effect_by_condition": {
+        "control": 0.0,
+        "polite": 0.0816326530612245,
+        "authority": 0.2755102040816327
+      },
+      "did_authority_minus_control": 0.2755102040816327,
+      "bootstrap_ci95": [
+        0.19387755102040816,
+        0.3673469387755102
+      ],
+      "n_items": 98,
+      "n_boot": 1000,
+      "label": "exploratory (under-powered at N=100)"
+    },
+    "openai/gpt-5.2": {
+      "A_effect_by_condition": {
+        "control": 0.01020408163265306,
+        "polite": 0.02051123479694908,
+        "authority": 0.2569573283858998
+      },
+      "did_authority_minus_control": 0.24675324675324672,
+      "bootstrap_ci95": [
+        0.16161616161616163,
+        0.33333333333333337
+      ],
+      "n_items": 99,
+      "n_boot": 1000,
+      "label": "exploratory (under-powered at N=100)"
+    }
+  },
+  "manipulation_check": {
+    "anthropic/claude-sonnet-5": {
+      "z_by_persona": {
+        "none": {
+          "E": -0.12
+        }
+      },
+      "checks": {}
+    },
+    "openai/gpt-5.2": {
+      "z_by_persona": {
+        "none": {
+          "A": 0.33,
+          "E": -0.23
+        }
+      },
+      "checks": {}
+    }
+  },
+  "power_note": "N=100 items per cell detects ~15 pp at alpha .05 / power .80; H4 exploratory."
+}

@@ -1,8 +1,8 @@
 ---
 title: "Too Agreeable to Disagree? Social Pressure and Induced Big Five Personas in Frontier Language Models"
-subtitle: "Pre-registered method, analysis plan and pilot results"
+subtitle: "Pre-registered method, analysis plan and results"
 author: "Berfay Hunalp"
-date: "16 September 2026 (pre-registration frozen at git tag prereg-v1)"
+date: "16 September 2026 (pre-registration frozen at git tag prereg-v1; data collected the same day)"
 ---
 
 ```{=openxml}
@@ -11,7 +11,7 @@ date: "16 September 2026 (pre-registration frozen at git tag prereg-v1)"
 
 # Abstract
 
-Large language models (LLMs) often abandon a correct answer when a user pushes back, a behaviour known as sycophancy. Human obedience research shows that Agreeableness and Conscientiousness predict compliance with an authority (Bègue et al., 2015), and trait activation theory predicts that a trait is expressed most strongly when the situation cues it (Tett & Burnett, 2003). A recent correlational study reported that more agreeable role-play personas are more sycophantic in small open-weight models (Shah et al., 2026). The present pre-registered experiment tests whether the effect is causal and whether it holds in frontier models. Two models (Claude Sonnet 5, GPT-5.2) answer 100 multiple-choice items drawn from MMLU, then receive one of three pushbacks: a neutral check ("Are you sure?"), a polite disagreement, or an authority claim ("I teach this subject"), each proposing the same pre-selected wrong option. This pressure factor is crossed with a system-prompt persona factor: no persona, high or low Agreeableness, high or low Conscientiousness. The primary outcome is whether the answer changes. The induced personas are validated with the 50-item IPIP Big Five Factor Markers scored against norms from 603,322 human respondents. Hypotheses, exclusion rules, tests and power are fixed before data collection. A 10-item pilot showed full format compliance and a steep pressure gradient (Claude Sonnet 5: 0 %, 22 %, 78 % flips under control, polite and authority pressure). Limitations include the item count per cell, a single wrong-answer framing, single-turn pressure and prompted rather than trained traits. Two follow-up studies (self-report drift under pressure; trained versus prompted traits) are specified.
+Large language models (LLMs) often abandon a correct answer when a user pushes back, a behaviour known as sycophancy. Human obedience research shows that Agreeableness and Conscientiousness predict compliance with an authority (Bègue et al., 2015), and trait activation theory predicts that a trait is expressed most strongly when the situation cues it (Tett & Burnett, 2003). A recent correlational study reported that more agreeable role-play personas are more sycophantic in small open-weight models (Shah et al., 2026). The present pre-registered experiment tests whether the effect is causal and whether it holds in frontier models. Two models (Claude Sonnet 5, GPT-5.2) answer 100 multiple-choice items drawn from MMLU, then receive one of three pushbacks: a neutral check ("Are you sure?"), a polite disagreement, or an authority claim ("I teach this subject"), each proposing the same pre-selected wrong option. This pressure factor is crossed with a system-prompt persona factor: no persona, high or low Agreeableness, high or low Conscientiousness. The primary outcome is whether the answer changes. The induced personas are validated with the 50-item IPIP Big Five Factor Markers scored against norms from 603,322 human respondents. Hypotheses, exclusion rules, tests and power were fixed before data collection. All 4,000 replies were parseable. Pressure produced a steep gradient on both models (Claude Sonnet 5: 1 %, 21 %, 82 % flips under control, polite and authority pressure; GPT-5.2: 0 %, 4 %, 44 %; Cochran's Q, *p* < 10⁻¹⁷), and 99 % of flips adopted the suggested wrong answer. A disagreeable persona roughly halved capitulation under authority on both models (to 34 % and 18 %), the Agreeableness effect grew with the strength of the pressure cue, and hedged answers flipped about twice as often as confident ones. Two results were unexpected: the default assistant with no persona was as deferential as, or more deferential than, the explicitly agreeable persona, and on Claude Sonnet 5 a careless low-Conscientiousness persona was the most sycophantic condition of all (96 % under authority). Limitations include the item count per cell, a single wrong-answer framing, single-turn pressure and prompted rather than trained traits. Two follow-up studies (self-report drift under pressure; trained versus prompted traits) are specified.
 
 *Keywords:* sycophancy, large language models, Big Five, Agreeableness, trait activation, obedience, pre-registration
 
@@ -113,26 +113,70 @@ The README with hypotheses, design, exclusions, power and analysis plan was comm
 
 # Results
 
-*To be completed from `analysis/summary.csv` and `analysis/tests.json` after the full run.*
+The full run took place on 16 September 2026 between 14:09 and 16:40 local time and cost US$4.20 in model calls. All figures below come from `analysis/summary.csv` and `analysis/tests.json`, produced by `scripts/analyze.py` from the raw records in `results/`.
 
-## Pilot (10 items, baseline persona)
+## Data Quality
 
-The pilot served to check format compliance and parsing before the full run. Both models returned exactly the requested format on every Turn-2 reply and on all but one Turn-1 reply (one Claude reply was cut off by the initial 300-token budget, which motivated deviation (d)). Turn-1 accuracy was 9/9 for Claude Sonnet 5 and 9/10 for GPT-5.2. Turn-1 confidence ranged 62–98 for Claude and 86–100 for GPT-5.2, so the H2 fallback (median split) will most likely apply to GPT-5.2.
+All 4,000 study calls returned a reply, and every reply contained a parseable letter: 0 unparsable and 0 ambiguous answers out of 1,000 Turn-1 and 3,000 Turn-2 records. Neither provider rejected a parameter. The only exclusions were the 60 pre-registered cases (2.0 %) in which the Turn-1 letter already equalled the suggested wrong option, leaving 2,940 valid trials, 97–99 per cell. Turn-1 accuracy was 0.92–0.93 for Claude Sonnet 5 and 0.90–0.92 for GPT-5.2 and did not differ across personas, so the persona manipulation did not change what the models knew. Median Turn-1 confidence was 90 for Claude Sonnet 5 (range 55–100) and 95 for GPT-5.2 (range 55–100). Of all flips, 98.9 % were capitulations to the suggested wrong letter. As expected under the strict format line, no Turn-2 reply contained a verbal concession.
 
-| model | condition | *n* valid | flips | rate | Wilson 95 % CI |
-|---|---|---|---|---|---|
-| Claude Sonnet 5 | control | 9 | 0 | .00 | [.00, .30] |
-| Claude Sonnet 5 | polite | 9 | 2 | .22 | [.06, .55] |
-| Claude Sonnet 5 | authority | 9 | 7 | .78 | [.45, .94] |
-| GPT-5.2 | control | 9 | 0 | .00 | [.00, .30] |
-| GPT-5.2 | polite | 9 | 0 | .00 | [.00, .30] |
-| GPT-5.2 | authority | 9 | 3 | .33 | [.12, .65] |
+## H1: Pressure Gradient
 
-Cochran's Q on the nine complete items was significant for Claude Sonnet 5 (*p* = .004) and marginal for GPT-5.2 (*p* = .050). Every flip was a capitulation to the suggested wrong letter. No Turn-2 reply contained a verbal concession, because the format line suppresses free text; the concession flag is retained but is expected to be near zero. These pilot figures are descriptive and are not evidence for H1; the full run decides.
+Table 4 gives the flip rate for every model × persona × condition cell. With no persona, Claude Sonnet 5 flipped on 1.0 % of items after "Are you sure?", 21.4 % after a polite disagreement and 81.6 % after an authority claim; GPT-5.2 flipped on 0.0 %, 4.1 % and 43.9 %. The ordering control < polite < authority held in every one of the ten model × persona strata. Cochran's Q on the 98 complete baseline items was 128.1 for Claude Sonnet 5 and 78.7 for GPT-5.2 (both df = 2, *p* < 10⁻¹⁷); pooled over personas, Q = 532.1 and 332.8 (*n* = 489 and 491). All pairwise exact McNemar tests were significant at the Bonferroni-corrected α = .0167, with one exception: for GPT-5.2 with no persona, control versus polite rested on four discordant items (*p* = .125). In no pair did any item flip under the weaker pressure but not the stronger. H1 is supported for both models.
+
+Table 4. *Turn-2 answer-flip rate by model, persona and pressure condition (valid trials; Wilson 95 % CI)*
+
+| model | persona | control | polite | authority |
+|---|---|---|---|---|
+| Claude Sonnet 5 | none | .010 [.002, .056] | .214 [.145, .305] | .816 [.728, .881] |
+| Claude Sonnet 5 | high A | .000 [.000, .038] | .092 [.049, .165] | .612 [.513, .703] |
+| Claude Sonnet 5 | low A | .000 [.000, .038] | .010 [.002, .056] | .337 [.251, .435] |
+| Claude Sonnet 5 | high C | .021 [.006, .072] | .155 [.096, .240] | .701 [.604, .783] |
+| Claude Sonnet 5 | low C | .000 [.000, .038] | .469 [.374, .567] | .959 [.900, .984] |
+| GPT-5.2 | none | .000 [.000, .038] | .041 [.016, .100] | .439 [.345, .537] |
+| GPT-5.2 | high A | .010 [.002, .056] | .031 [.010, .086] | .439 [.345, .537] |
+| GPT-5.2 | low A | .000 [.000, .037] | .010 [.002, .055] | .182 [.118, .269] |
+| GPT-5.2 | high C | .000 [.000, .038] | .031 [.010, .086] | .418 [.326, .517] |
+| GPT-5.2 | low C | .000 [.000, .038] | .061 [.028, .127] | .378 [.288, .476] |
+
+*Note.* *n* = 97–99 valid trials per cell (100 items minus trials whose Turn-1 answer already matched the suggested wrong option).
+
+## H2: Hedged Versus Confident Answers
+
+For Claude Sonnet 5 the pre-registered threshold applied: 26 baseline items had Turn-1 confidence below 80. Pooled over conditions, hedged trials flipped at 51.3 % (40/78) against 28.7 % (62/216) for confident trials, *z* = 3.59, one-sided *p* < .001; pooled over all personas, 49.1 % versus 21.8 %, *z* = 10.30. For GPT-5.2 only eight baseline items fell below 80, so the declared fallback, a per-model median split at 95, was used: 26.1 % (29/111) versus 9.8 % (18/183), *z* = 3.69, *p* < .001; pooled over personas, 23.5 % versus 6.2 %, *z* = 9.60. A related pattern appears in accuracy: under authority pressure, trials whose Turn-1 answer was wrong flipped more often than trials whose Turn-1 answer was right (Claude Sonnet 5: 81.5 % vs 67.7 %; GPT-5.2: 65.7 % vs 34.9 %). H2 is supported for both models, for GPT-5.2 under the pre-declared fallback.
+
+## H3: Persona Main Effects
+
+Table 5 pools the three pressure conditions. The predicted ordering high Agreeableness > low Agreeableness held on both models: Claude Sonnet 5, 23.5 % versus 11.6 %, *z* = 3.80, *p* < .001; GPT-5.2, 16.0 % versus 6.4 %, *z* = 3.70, *p* < .001. The second half of H3a, high Agreeableness > no persona, was not supported: on Claude Sonnet 5 the no-persona baseline flipped *more* than the agreeable persona (34.7 % vs 23.5 %, *z* = −3.00 in the direction opposite to the prediction), and on GPT-5.2 the two were identical (16.0 % vs 16.0 %). No persona > low Agreeableness held on both models (*p* < .001). For Conscientiousness (H3b, two-tailed) the models diverged. On Claude Sonnet 5 the low-Conscientiousness persona was the most sycophantic of all five (47.6 %), flipping on 46.9 % of polite and 95.9 % of authority trials, against 29.2 % for the high-Conscientiousness persona, *z* = −4.58, *p* < .001; high Conscientiousness did not differ from baseline (*p* = .16). On GPT-5.2 Conscientiousness had no effect (15.0 % vs 14.6 %, *p* = .91). H3a is half supported, H3b is supported for Claude Sonnet 5 and not for GPT-5.2.
+
+Table 5. *Flip rate by persona, pooled over pressure conditions*
+
+| persona | Claude Sonnet 5 | GPT-5.2 |
+|---|---|---|
+| none | .347 | .160 |
+| high Agreeableness | .235 | .160 |
+| low Agreeableness | .116 | .064 |
+| high Conscientiousness | .292 | .150 |
+| low Conscientiousness | .476 | .146 |
+
+## H4: Agreeableness × Pressure
+
+The Agreeableness effect (high minus low) was 0.000, +0.082 and +0.276 under control, polite and authority pressure for Claude Sonnet 5, and +0.010, +0.021 and +0.257 for GPT-5.2. The difference-in-differences (authority minus control) was +0.276, bootstrap 95 % CI [0.194, 0.367], for Claude Sonnet 5 and +0.247 [0.162, 0.333] for GPT-5.2. Because the control condition sits at floor for every persona, part of this interaction is arithmetic; the informative comparison is polite versus authority, where the Agreeableness effect grew from 8 to 28 points on Claude Sonnet 5 and from 2 to 26 points on GPT-5.2. The trait was expressed in proportion to the strength of the situational cue, as trait activation theory predicts. H4 is supported, with the floor caveat and its pre-declared exploratory status.
+
+## Manipulation Check
+
+<!-- IPIP -->
 
 # Discussion
 
-*To be completed after the full run: pressure gradient (H1) in frontier models compared with Sharma et al. (2023); whether the persona manipulation took (manipulation check) and, if so, whether Agreeableness moved capitulation (H3a) and interacted with authority (H4); what Conscientiousness did (H3b); what surprised us; what we would do differently.*
+Three findings stand out. First, the pressure gradient is steep in frontier models. A bare "Are you sure?" almost never moves either model (1 % and 0 %), which is progress over the assistants studied by Sharma et al. (2023). A claimed teacher moves Claude Sonnet 5 on 82 % of items and GPT-5.2 on 44 %, even though both answered 92 % of the items correctly and rated their confidence at 90–95. The models did not become uncertain; they deferred. That 98.9 % of flips landed on the suggested wrong letter, not on a third option, confirms that this is capitulation, not reconsideration.
+
+Second, the persona manipulation works causally, and in the predicted direction for the high-versus-low contrast, on both models. Making the simulated character disagreeable roughly halved capitulation under authority on both models (82 → 34 % and 44 → 18 %), replicating Shah et al.'s (2026) correlational finding as an experimental one on models three orders of magnitude larger. The trait × situation prediction also held: Agreeableness made no difference when nobody pushed, a small difference under polite disagreement, and a large one under an authority claim.
+
+Third, and unexpectedly, the no-persona baseline was the most or joint-most agreeable condition. On Claude Sonnet 5 an explicitly "extremely agreeable" character capitulated less than the default assistant. One reading is that the default assistant persona, tuned for helpfulness, already sits near the ceiling of deference, and that any specified character, by giving the model a stance to maintain, reduces it. The Conscientiousness results support this reading only partly: on Claude Sonnet 5 the careless persona, told it "rarely checks its work", capitulated on 96 % of authority trials and on 47 % of polite ones, the highest rates observed, while the conscientious persona did not differ from baseline. That is the opposite of Bègue et al.'s (2015) human finding that Conscientiousness predicts obedience, and it suggests that what a trait sentence does in a language model is governed by the semantics of the adjectives (careless people do not defend answers) rather than by the human nomological network of the trait. GPT-5.2 was insensitive to Conscientiousness in either direction, and moved only for the disagreeable persona. The two models therefore differ not only in how sycophantic they are but in how much a character prompt changes them.
+
+For practice, the cost of persona tuning is now a number. Vendors and deployers who make an assistant warmer, or who leave it in its default deferential register, buy that at 25 to 60 percentage points of truth-keeping under an authority claim, on Claude Sonnet 5. The most truthful configuration under pressure was the least pleasant one. For research, the study shows that a pre-registered, item-paired design with verifiable answers can settle in an afternoon and for under five dollars a question that correlational persona surveys leave open.
+
+What surprised us: the baseline exceeding the agreeable persona; the size of the low-Conscientiousness effect; the near-total absence of flips after a neutral check. What we would do differently: add a persona with a neutral, trait-free character sentence to separate "any character" from trait content; include a confident-wrong pushback variant to test whether the models are deferring to claimed status or to assertiveness; use free-text items in a second block; and run a multi-turn escalation.
 
 # Limitations
 
