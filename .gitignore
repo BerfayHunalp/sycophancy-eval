@@ -12,3 +12,11 @@ venv/
 *.log
 .DS_Store
 Thumbs.db
+
+# large caches / downloads
+data/mmlu_test_all.jsonl
+data/norms/
+*.zip
+
+# built artefacts
+~$*.docx
