@@ -61,9 +61,9 @@ Difference-in-differences authority minus control: +0.28 [0.19, 0.37] and +0.25 
 
 Items the model itself rated below 80 confidence flipped 51 % vs 29 % on Sonnet (pre-registered threshold). GPT-5.2 rated almost everything 90+, so the pre-declared fallback, a median split at 95, applied: 26 % vs 10 %. Both *p* < .001. Wrong Turn-1 answers also flipped more than right ones under authority (Sonnet 82 % vs 68 %, GPT-5.2 66 % vs 35 %).
 
-### Manipulation check: did the personas take?
+### Manipulation check: did the personas take? (yes, too well)
 
-<!-- IPIP -->
+All 500 IPIP-50 items parsed. Against 603,322 humans, the high and low Agreeableness personas sit 5.4 SD apart on Agreeableness on both models, and the Conscientiousness personas 5.3–5.4 SD apart on Conscientiousness. They answered at the scale ceiling (5.0) and floor (1.0): caricatures, not people. The pre-registered discriminant criterion, under 0.5 SD movement on the other four factors, **failed** for all four manipulations. High personas rated themselves better on everything, low personas worse (Sonnet's low-C persona also dropped 1.3 SD on Agreeableness and 1.7 on Intellect). So each persona is trait plus valence. Valence alone cannot explain the behaviour, though: the two unpleasant personas pushed sycophancy in opposite directions. One more number worth having: with no persona at all, both models describe themselves as agreeable (+0.9 SD), conscientious (+1.0 to +1.6) and extremely emotionally stable (+2.1). The default assistant already is the nice guy.
 
 ## What surprised me
 

@@ -15,7 +15,7 @@ Conscientiousness) on 100 multiple-choice items with verifiable answers.
 | Pre-registration | frozen at git tag `prereg-v1` (2026-09-16). **No model call was made before this tag.** |
 | Item set, personas, IPIP-50, human norms | done (`data/`) |
 | Full run (5 personas × 100 items × 2 models) | **done 2026-09-16**, 4,000 calls, US$4.20, all raw records in `results/raw/` |
-| Manipulation check (IPIP-50 × 5 personas × 2 models) | <!-- IPIP-STATUS --> |
+| Manipulation check (IPIP-50 × 5 personas × 2 models) | done, 500 calls, all parsed; target factors moved > 5 SD, discriminant criterion **not met** (see below) |
 | Analysis | `analysis/summary.csv`, `tests.json`, `trials.csv`, plots |
 | APA-7 methodology document with results | `docs/methodology.md` → `docs/Methodology_APA.docx` |
 | Write-up | `docs/writeup.md` |
@@ -45,11 +45,13 @@ Turn-2 answer-flip rate on valid trials (n = 97–99 per cell; 60 trials exclude
 | H3a high A > no persona | **not supported**: baseline flipped more than the agreeable persona on Sonnet, equal on GPT-5.2 |
 | H3b Conscientiousness | Sonnet: low C most sycophantic of all (48 % pooled, *p* < .001); GPT-5.2: no effect |
 | H4 A × authority | **supported** (exploratory): A effect 0 → 8 → 28 pts (Sonnet), 1 → 2 → 26 pts (GPT-5.2) across control, polite, authority |
-| Manipulation check | <!-- IPIP-VERDICT --> |
+| Manipulation check | **split**: high vs low personas differ by 5.3–5.4 SD on the target factor (scale ceiling vs floor) on both models, but the other four factors also shifted by 0.3–2.0 SD in the same evaluative direction, so the pre-registered < 0.5 SD discriminant criterion fails. Trait content still matters beyond valence: the two negative personas moved sycophancy in opposite directions. |
 
 99 % of flips adopted the suggested wrong letter. Turn-1 accuracy was 0.90–0.93 in every persona, so the personas changed deference, not knowledge. Full tables, tests and discussion: `docs/methodology.md`; plot: `analysis/change_rate.png`.
 
 ![flip rates](analysis/change_rate.png)
+
+![persona IPIP profiles](analysis/ipip_profiles.png)
 
 ## Research question
 

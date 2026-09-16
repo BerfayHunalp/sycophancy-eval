@@ -113,7 +113,7 @@ The README with hypotheses, design, exclusions, power and analysis plan was comm
 
 # Results
 
-The full run took place on 16 September 2026 between 14:09 and 16:40 local time and cost US$4.20 in model calls. All figures below come from `analysis/summary.csv` and `analysis/tests.json`, produced by `scripts/analyze.py` from the raw records in `results/`.
+The full run took place on 16 September 2026 between 14:09 and 16:35 local time. Total spend on OpenRouter for the project, including the pilot and probes, was US$4.62 (US$4.20 for the 4,000 study calls). All figures below come from `analysis/summary.csv` and `analysis/tests.json`, produced by `scripts/analyze.py` from the raw records in `results/`.
 
 ## Data Quality
 
@@ -164,13 +164,32 @@ The Agreeableness effect (high minus low) was 0.000, +0.082 and +0.276 under con
 
 ## Manipulation Check
 
-<!-- IPIP -->
+All 500 IPIP-50 administrations returned a parseable rating. Table 6 gives each persona's factor scores as *z* values against the 603,322-respondent human norms. The target manipulations were very large: high and low Agreeableness personas differed by 5.43 SD on Agreeableness on both models, and high and low Conscientiousness personas by 5.41 SD (Claude Sonnet 5) and 5.28 SD (GPT-5.2). On the 1–5 scale the high personas scored 5.0 and the low personas 1.0 on their target factor, that is, at the scale ceiling and floor, so the personas answered as caricatures rather than as graded individuals. The pre-registered discriminant criterion, less than 0.5 SD on each non-target factor, was **not met** for any of the four manipulations. The Agreeableness contrast also moved Extraversion by 1.21 SD, Emotional Stability by 1.05 and Conscientiousness by 0.81 on Claude Sonnet 5 (0.33, 0.93 and 0.81 on GPT-5.2); the Conscientiousness contrast moved Agreeableness by 2.04 SD, Emotional Stability by 1.98 and Intellect by 1.94 on Claude Sonnet 5 (0.00, 0.58 and 0.49 on GPT-5.2, the closest any manipulation came to passing). The off-target shifts run in the evaluative direction: high personas described themselves more favourably on every factor, low personas less favourably. The persona contrasts are therefore a strong manipulation of the target trait confounded with a general valence shift, and the behavioural persona effects must be read with that in mind (see Discussion). The no-persona baseline described itself as highly agreeable (*z* = +0.87 and +0.73), conscientious (+1.02, +1.57) and emotionally stable (+2.07, +2.19), only about 0.8 SD below the explicitly agreeable persona on Agreeableness.
+
+Table 6. *IPIP-50 factor scores of each persona, z against human norms (E Extraversion, A Agreeableness, C Conscientiousness, N Emotional Stability, O Intellect)*
+
+| model | persona | E | A | C | N | O |
+|---|---|---|---|---|---|---|
+| Claude Sonnet 5 | none | −0.12 | 0.87 | 1.02 | 2.07 | 0.91 |
+| Claude Sonnet 5 | high A | 0.20 | 1.69 | 0.48 | 1.14 | −0.06 |
+| Claude Sonnet 5 | low A | −1.00 | −3.75 | −0.33 | 0.09 | −0.55 |
+| Claude Sonnet 5 | high C | −0.12 | 0.73 | 2.24 | 1.72 | 0.26 |
+| Claude Sonnet 5 | low C | 0.53 | −1.30 | −3.17 | −0.25 | −1.68 |
+| GPT-5.2 | none | −0.23 | 0.73 | 1.57 | 2.19 | 0.91 |
+| GPT-5.2 | high A | 0.64 | 1.69 | 1.02 | 1.95 | 1.23 |
+| GPT-5.2 | low A | 0.31 | −3.75 | 0.21 | 1.02 | 1.23 |
+| GPT-5.2 | high C | 0.20 | 0.60 | 2.11 | 1.84 | 0.75 |
+| GPT-5.2 | low C | −0.12 | 0.60 | −3.17 | 1.26 | 0.26 |
+
+*Note.* Human norms: Open-Source Psychometrics Project IPIP-FFM sample after cleaning (*N* = 603,322); anchor wording differs between that sample and the personas, so absolute *z* values are approximate and differences between personas are the interpretable quantity.
 
 # Discussion
 
 Three findings stand out. First, the pressure gradient is steep in frontier models. A bare "Are you sure?" almost never moves either model (1 % and 0 %), which is progress over the assistants studied by Sharma et al. (2023). A claimed teacher moves Claude Sonnet 5 on 82 % of items and GPT-5.2 on 44 %, even though both answered 92 % of the items correctly and rated their confidence at 90–95. The models did not become uncertain; they deferred. That 98.9 % of flips landed on the suggested wrong letter, not on a third option, confirms that this is capitulation, not reconsideration.
 
 Second, the persona manipulation works causally, and in the predicted direction for the high-versus-low contrast, on both models. Making the simulated character disagreeable roughly halved capitulation under authority on both models (82 → 34 % and 44 → 18 %), replicating Shah et al.'s (2026) correlational finding as an experimental one on models three orders of magnitude larger. The trait × situation prediction also held: Agreeableness made no difference when nobody pushed, a small difference under polite disagreement, and a large one under an authority claim.
+
+The manipulation check qualifies the persona findings in two ways. The trait sentences moved the target factor by more than five human standard deviations but also shifted the other four factors in the same evaluative direction, so each contrast is a trait manipulation confounded with a valence manipulation. The behavioural results argue against valence being the whole story: the two negatively valenced personas moved sycophancy in opposite directions, low Agreeableness halving capitulation and low Conscientiousness maximising it. Trait content, not merely how pleasant the character is, drove the behaviour. The second qualification is that the personas answered the IPIP at the scale extremes, which is not how people answer; prompted traits are caricatures, and the generalisation from these caricatures to graded personality is an open question. The check also documents the default assistant's self-description: highly agreeable, highly conscientious and very emotionally stable, only 0.8 SD below the explicitly agreeable persona on Agreeableness, which is consistent with the third finding.
 
 Third, and unexpectedly, the no-persona baseline was the most or joint-most agreeable condition. On Claude Sonnet 5 an explicitly "extremely agreeable" character capitulated less than the default assistant. One reading is that the default assistant persona, tuned for helpfulness, already sits near the ceiling of deference, and that any specified character, by giving the model a stance to maintain, reduces it. The Conscientiousness results support this reading only partly: on Claude Sonnet 5 the careless persona, told it "rarely checks its work", capitulated on 96 % of authority trials and on 47 % of polite ones, the highest rates observed, while the conscientious persona did not differ from baseline. That is the opposite of Bègue et al.'s (2015) human finding that Conscientiousness predicts obedience, and it suggests that what a trait sentence does in a language model is governed by the semantics of the adjectives (careless people do not defend answers) rather than by the human nomological network of the trait. GPT-5.2 was insensitive to Conscientiousness in either direction, and moved only for the disagreeable persona. The two models therefore differ not only in how sycophantic they are but in how much a character prompt changes them.
 
